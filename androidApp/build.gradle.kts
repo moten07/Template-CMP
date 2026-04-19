@@ -1,12 +1,12 @@
 plugins {
-    alias(libs.plugins.androidApplication)
-    alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.compose.compiler)
 }
 
 
 android {
     namespace = "com.example.template"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
+    compileSdk = libs.versions.android.targetSdk.get().toInt()
 
     defaultConfig {
         applicationId = "com.example.template"
