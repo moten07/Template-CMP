@@ -1,4 +1,4 @@
-English | [简体中文](README-zh.md) | [Русский](./README-ru.md) | Français
+English | [简体中文](README-zh.md) | [Русский](./README-ru.md) | [Français](./README-fr.md)
 
 # Modèle Kotlin Multiplatform
 
@@ -20,69 +20,22 @@ Il s'agit d'un projet Kotlin Multiplatform ciblant Android, iOS, Web, Desktop (J
 
 ## Construire et exécuter l'application Android
 
-Pour construire et exécuter la version de développement de l'application Android, utilisez la configuration d'exécution du widget d'exécution dans la barre d'outils de votre IDE ou construisez-la directement depuis le terminal :
-
-- sur macOS/Linux
-  ```shell
-  ./gradlew :androidApp:assembleDebug
-  ```
-- sur Windows
-  ```shell
-  .\gradlew.bat :androidApp:assembleDebug
-  ```
-
-## Construire et exécuter l'application Desktop (JVM)
-
-Pour construire et exécuter la version de développement de l'application desktop, utilisez la configuration d'exécution du widget d'exécution dans la barre d'outils de votre IDE ou exécutez-la directement depuis le terminal :
-
-- sur macOS/Linux
-  ```shell
-  ./gradlew :desktopApp:run
-  ```
-- sur Windows
-  ```shell
-  .\gradlew.bat :desktopApp:run
-  ```
-
-## Construire et exécuter le serveur
-
-Pour construire et exécuter la version de développement du serveur, utilisez la configuration d'exécution du widget d'exécution dans la barre d'outils de votre IDE ou exécutez-le directement depuis le terminal :
-
-- sur macOS/Linux
-  ```shell
-  ./gradlew :server:run
-  ```
-- sur Windows
-  ```shell
-  .\gradlew.bat :server:run
-  ```
-
-## Construire et exécuter l'application Web
-
-Pour construire et exécuter la version de développement de l'application web, utilisez la configuration d'exécution du widget d'exécution dans la barre d'outils de votre IDE ou exécutez-la directement depuis le terminal :
-
-- pour la cible JS :
-    - sur macOS/Linux
-      ```shell
-      ./gradlew :webApp:jsBrowserDevelopmentRun
-      ```
-    - sur Windows
-      ```shell
-      .\gradlew.bat :webApp:jsBrowserDevelopmentRun
-      ```
-- pour la cible Wasm :
-    - sur macOS/Linux
-      ```shell
-      ./gradlew :webApp:wasmJsBrowserDevelopmentRun
-      ```
-    - sur Windows
-      ```shell
-      .\gradlew.bat :webApp:wasmJsBrowserDevelopmentRun
-      ```
-
-## Construire et exécuter l'application iOS
-
-Pour construire et exécuter la version de développement de l'application iOS, utilisez la configuration d'exécution du widget d'exécution dans la barre d'outils de votre IDE ou ouvrez le répertoire [/iosApp](./iosApp) dans Xcode et exécutez-le depuis là.
+* `app`
+    - `androidMain`
+        + install: `gradle -q :androidApp:installDebug`
+    - `desktopMain`
+        + run: `gradle -q :desktopApp:run -DmainClass=MainKt`
+    - `webMain`
+        + run:`gradle :webApp:wasmJsBrowserDevelopmentRun`
+        + run:`gradle :webApp:jsBrowserDevelopmentRun`
+        + Generate artifacts: `gradle :webApp:wasmJsBrowserDistribution`
+            * Les artefacts générés se trouvent dans le répertoire :
+              `webApp/build/dist/wasmJs/productionExecutable`
+            * peut être poussé vers GitHub pages
+    - `server`
+        + run: `gradle :server:run`
+    - `ios`
+        + Pour construire et exécuter la version de développement de l'application iOS, utilisez la configuration d'exécution du widget d'exécution dans la barre d'outils de votre IDE ou ouvrez le répertoire [/iosApp](./iosApp) dans Xcode et exécutez-le depuis là.
 
 ---
 

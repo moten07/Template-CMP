@@ -20,69 +20,22 @@
 
 ## 构建和运行 Android 应用程序
 
-要构建和运行 Android 应用程序的开发版本，请使用 IDE 工具栏中的运行配置小部件，或直接从终端构建：
-
-- 在 macOS/Linux 上
-  ```shell
-  ./gradlew :androidApp:assembleDebug
-  ```
-- 在 Windows 上
-  ```shell
-  .\gradlew.bat :androidApp:assembleDebug
-  ```
-
-## 构建和运行桌面 (JVM) 应用程序
-
-要构建和运行桌面应用程序的开发版本，请使用 IDE 工具栏中的运行配置小部件，或直接从终端运行：
-
-- 在 macOS/Linux 上
-  ```shell
-  ./gradlew :desktopApp:run
-  ```
-- 在 Windows 上
-  ```shell
-  .\gradlew.bat :desktopApp:run
-  ```
-
-## 构建和运行服务器
-
-要构建和运行服务器的开发版本，请使用 IDE 工具栏中的运行配置小部件，或直接从终端运行：
-
-- 在 macOS/Linux 上
-  ```shell
-  ./gradlew :server:run
-  ```
-- 在 Windows 上
-  ```shell
-  .\gradlew.bat :server:run
-  ```
-
-## 构建和运行 Web 应用程序
-
-要构建和运行 Web 应用程序的开发版本，请使用 IDE 工具栏中的运行配置小部件，或直接从终端运行：
-
-- 对于 JS 目标：
-    - 在 macOS/Linux 上
-      ```shell
-      ./gradlew :webApp:jsBrowserDevelopmentRun
-      ```
-    - 在 Windows 上
-      ```shell
-      .\gradlew.bat :webApp:jsBrowserDevelopmentRun
-      ```
-- 对于 Wasm 目标：
-    - 在 macOS/Linux 上
-      ```shell
-      ./gradlew :webApp:wasmJsBrowserDevelopmentRun
-      ```
-    - 在 Windows 上
-      ```shell
-      .\gradlew.bat :webApp:wasmJsBrowserDevelopmentRun
-      ```
-
-## 构建和运行 iOS 应用程序
-
-要构建和运行 iOS 应用程序的开发版本，请使用 IDE 工具栏中的运行配置小部件，或在 Xcode 中打开 [/iosApp](./iosApp) 目录并从那里运行。
+* `app`
+    - `androidMain`
+        + install: `gradle -q :androidApp:installDebug`
+    - `desktopMain`
+        + run: `gradle -q :desktopApp:run -DmainClass=MainKt`
+    - `webMain`
+        + run:`gradle :webApp:wasmJsBrowserDevelopmentRun`
+        + run:`gradle :webApp:jsBrowserDevelopmentRun`
+        + Generate artifacts: `gradle :webApp:wasmJsBrowserDistribution`
+            * 生成的工件位于目录中：
+              `webApp/build/dist/wasmJs/productionExecutable`
+            * 可以将其推送到 GitHub pages
+    - `server`
+        + run: `gradle :server:run`
+    - `ios`
+        + 要构建和运行 iOS 应用程序的开发版本，请使用 IDE 工具栏中的运行配置小部件，或在 Xcode 中打开 [/iosApp](./iosApp) 目录并从那里运行。
 
 ---
 

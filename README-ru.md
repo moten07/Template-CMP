@@ -1,4 +1,4 @@
-English | [简体中文](README-zh.md) | Русский | [Français](./README-fr.md)
+English | [简体中文](README-zh.md) | [Русский](./README-ru.md) | [Français](./README-fr.md)
 
 # Шаблон Kotlin Multiplatform
 
@@ -20,69 +20,22 @@ English | [简体中文](README-zh.md) | Русский | [Français](./README-f
 
 ## Сборка и запуск Android приложения
 
-Чтобы собрать и запустить версию разработки Android приложения, используйте конфигурацию запуска из виджета запуска в панели инструментов вашей IDE или соберите его напрямую из терминала:
-
-- на macOS/Linux
-  ```shell
-  ./gradlew :androidApp:assembleDebug
-  ```
-- на Windows
-  ```shell
-  .\gradlew.bat :androidApp:assembleDebug
-  ```
-
-## Сборка и запуск Desktop (JVM) приложения
-
-Чтобы собрать и запустить версию разработки desktop приложения, используйте конфигурацию запуска из виджета запуска в панели инструментов вашей IDE или запустите его напрямую из терминала:
-
-- на macOS/Linux
-  ```shell
-  ./gradlew :desktopApp:run
-  ```
-- на Windows
-  ```shell
-  .\gradlew.bat :desktopApp:run
-  ```
-
-## Сборка и запуск сервера
-
-Чтобы собрать и запустить версию разработки сервера, используйте конфигурацию запуска из виджета запуска в панели инструментов вашей IDE или запустите его напрямую из терминала:
-
-- на macOS/Linux
-  ```shell
-  ./gradlew :server:run
-  ```
-- на Windows
-  ```shell
-  .\gradlew.bat :server:run
-  ```
-
-## Сборка и запуск веб-приложения
-
-Чтобы собрать и запустить версию разработки веб-приложения, используйте конфигурацию запуска из виджета запуска в панели инструментов вашей IDE или запустите его напрямую из терминала:
-
-- для цели JS:
-    - на macOS/Linux
-      ```shell
-      ./gradlew :webApp:jsBrowserDevelopmentRun
-      ```
-    - на Windows
-      ```shell
-      .\gradlew.bat :webApp:jsBrowserDevelopmentRun
-      ```
-- для цели Wasm:
-    - на macOS/Linux
-      ```shell
-      ./gradlew :webApp:wasmJsBrowserDevelopmentRun
-      ```
-    - на Windows
-      ```shell
-      .\gradlew.bat :webApp:wasmJsBrowserDevelopmentRun
-      ```
-
-## Сборка и запуск iOS приложения
-
-Чтобы собрать и запустить версию разработки iOS приложения, используйте конфигурацию запуска из виджета запуска в панели инструментов вашей IDE или откройте директорию [/iosApp](./iosApp) в Xcode и запустите оттуда.
+* `app`
+    - `androidMain`
+        + install: `gradle -q :androidApp:installDebug`
+    - `desktopMain`
+        + run: `gradle -q :desktopApp:run -DmainClass=MainKt`
+    - `webMain`
+        + run:`gradle :webApp:wasmJsBrowserDevelopmentRun`
+        + run:`gradle :webApp:jsBrowserDevelopmentRun`
+        + Generate artifacts: `gradle :webApp:wasmJsBrowserDistribution`
+            * Сгенерированные артефакты находятся в директории:
+              `webApp/build/dist/wasmJs/productionExecutable`
+            * можно отправить на GitHub pages
+    - `server`
+        + run: `gradle :server:run`
+    - `ios`
+        + Чтобы собрать и запустить версию разработки iOS приложения, используйте конфигурацию запуска из виджета запуска в панели инструментов вашей IDE или откройте директорию [/iosApp](./iosApp) в Xcode и запустите оттуда.
 
 ---
 

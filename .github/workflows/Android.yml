@@ -1,0 +1,67 @@
+name: Android CI
+
+on:
+  push:
+    #    branches: [ "main" ]
+    # The condition is to push to the tag branch
+    tags: [ "v*" ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - run: echo "strat build"
+      # Replace
+      - uses: actions/checkout@v3
+      # Setup Java
+      - uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: 21
+      # Execute the packaging command here is apk
+      # If aab is required, replace assemble with bundle
+      # If you only need debug, replace Release with Debug
+      - name: Package apk
+        run: |
+          chmod +x ./gradlew
+          ./gradlew -q clean :androidApp:assembleRelease
+      # align apk
+      - name: Align apk file
+        run: |
+          /usr/local/lib/android/sdk/build-tools/34.0.0/zipalign -p -f 4 \
+          androidApp/build/outputs/apk/release/app-release-unsigned.apk \
+          androidApp/build/outputs/apk/release/app-release-unsigned-aligned.apk
+      # create key
+      - name: Create key file
+        run: |
+          mkdir -p androidApp/build/keys
+          touch androidApp/build/keys/tempKey.base64
+          "${{ secrets.ANDROID_KEY_BASE64 }}" > androidApp/build/keys/tempKey.base64
+          openssl base64 -d -in androidApp/build/keys/tempKey.base64 -out androidApp/build/keys/tempKey.jks
+      # sign apk
+      - name: apksigner
+        run: |
+          /usr/local/lib/android/sdk/build-tools/34.0.0/apksigner sign \
+          --in androidApp/build/outputs/apk/release/app-release-unsigned-aligned.apk \
+          --out androidApp/build/outputs/apk/release/Listen1_$GITHUB_REF_NAME.apk \
+          --v4-signing-enabled true \
+          --ks androidApp/build/keys/tempKey.jks \
+          --ks-key-alias "${{ secrets.ANDROID_KEY_ALIAS }}" \
+          --ks-pass pass:"${{ secrets.ANDROID_KS_PASS }}" \
+          --key-pass pass:"${{ secrets.ANDROID_KEY_PASSWORD }}"
+      # Remove unsigned apk
+      - name: Remove unsigned apk
+        run: |
+          rm -rf androidApp/build/outputs/apk/release/app-release-unsigned.apk
+          rm -rf androidApp/build/outputs/apk/release/app-release-unsigned-aligned.apk
+      #  publish
+      - name: Upload Release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "app/build/outputs/apk/release/*"
+          token: ${{ github.token }}
+          generateReleaseNotes: true
+#      # cleanup
+      - name: Clean
+        run: chmod +x gradlew; ./gradlew -q clean
