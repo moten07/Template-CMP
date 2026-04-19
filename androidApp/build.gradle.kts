@@ -34,7 +34,6 @@ android {
 dependencies {
     implementation(libs.compose.uiToolingPreview)
     implementation(libs.androidx.activity.compose)
-    implementation(projects.composeApp)
     implementation(projects.shared)
 }
 
