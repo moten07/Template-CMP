@@ -9,18 +9,32 @@ plugins {
 
 kotlin {
     js {
-        browser()
+        outputModuleName = "webApp"
+        browser{
+            commonWebpackConfig {
+                outputFileName = "app.js"
+            }
+        }
         binaries.executable()
+        useEsModules()
     }
 
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
-        browser()
+        outputModuleName = "webApp"
+        browser{
+            commonWebpackConfig {
+                outputFileName = "app.js"
+            }
+        }
         binaries.executable()
     }
 
     sourceSets {
         webMain.dependencies {
+            implementation(libs.compose.runtime)
+            implementation(libs.compose.foundation)
+            implementation(libs.compose.material3)
             implementation(libs.compose.ui)
             implementation(projects.shared)
         }
