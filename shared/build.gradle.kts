@@ -17,8 +17,19 @@ kotlin {
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_11)
         }
+
         androidResources {
             enable = true
+        }
+
+        localDependencySelection {
+            // Determine which build type to consume from Android library dependencies, in order of preference
+            selectBuildTypeFrom.set(listOf("debug", "release"))
+
+            // Map the missing custom flavor dimensions directly
+            productFlavorDimension("tier") {
+                selectFrom.set(listOf("free"))
+            }
         }
     }
 
@@ -35,12 +46,14 @@ kotlin {
     jvm()
 
     js {
+        outputModuleName = "shared"
         browser()
         binaries.executable()
     }
 
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
+        outputModuleName = "shared"
         browser()
         binaries.executable()
     }
@@ -62,7 +75,7 @@ kotlin {
     }
 }
 
-compose.resources{
+compose.resources {
     publicResClass = false
     packageOfResClass = "com.example.template.resources"
     generateResClass = auto
