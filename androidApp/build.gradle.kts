@@ -46,5 +46,6 @@ dependencies {
     implementation(libs.compose.uiToolingPreview)
     implementation(libs.androidx.activity.compose)
     implementation(projects.shared)
+    implementation(projects.nativelib)
 }
 
